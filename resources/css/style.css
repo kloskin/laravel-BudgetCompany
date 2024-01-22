@@ -1,0 +1,33 @@
+body {
+    background-color: #5d7a7c;
+    color: #f6f6f3;
+}
+
+/*Background Colors*/
+.myBgColor1{
+    background-color: #e3d2be;
+}
+.myBgColor2{
+    background-color: #f6f6f3;
+}
+.myBgColor3{
+    background-color: #1a303a;
+}
+
+/*Text Colors*/
+.myTextColor1{
+    color: #1a333a;
+}
+.myTextColor1:hover{
+    color: #1a303a;
+}
+.myTextColor2
+{
+    color: #f6f6f3;
+}
+.myTextColor2:hover{
+    color: #1a333a;
+    transition: 0.2s;
+}
+
+

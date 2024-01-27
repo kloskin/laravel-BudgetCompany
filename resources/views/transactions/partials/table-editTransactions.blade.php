@@ -74,6 +74,6 @@
         </tbody>
     </table>
     <div class="p-5 bg-white">
-        {{$transactionsEdit->links()}}
+        {{ $transactionsEdit->appends(['tab' => session('selectedTab', 3)])->links() }}
     </div>
 </div>

@@ -37,13 +37,14 @@ class InvoiceController extends Controller
         if (!in_array($sort, $allowedSorts)) {
             $sort = 'created_at';
         }
-
+        if (Auth::user()->isAdmin()) {
+            $invoicesEdit = Invoice::orderBy($sort, $direction)->paginate(15);
+        }else{
+            $invoicesEdit = Invoice::where('user_id', Auth::id())->paginate(15);
+        }
         $invoices = Invoice::orderBy($sort, $direction)->paginate(15);
 
         $transactionsWithoutInvoice = Transaction::whereDoesntHave('invoice')->get();
-
-        $invoicesEdit = Invoice::where('user_id', Auth::id())->paginate(15);
-
 
         return view('invoices.index', [
             'invoices' => $invoices,
@@ -133,6 +134,10 @@ class InvoiceController extends Controller
             $request->user()->invoices()->create($validatedInvoice);
 
             DB::commit(); // Zatwierdź transakcję
+
+
+            $currentTab = $request->input('tab' , 1);
+            session(['selectedTab' => $currentTab]);
             return redirect(route('invoices.index'));
 
         } catch (\Exception $e) {

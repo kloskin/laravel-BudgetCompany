@@ -37,7 +37,7 @@ class InvoicePolicy
      */
     public function update(User $user, Invoice $invoice): bool
     {
-        return $invoice->user()->is($user);
+        return $user->isAdmin() || $invoice->user_id == $user->id;
     }
 
     /**

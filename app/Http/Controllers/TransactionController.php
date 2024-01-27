@@ -26,7 +26,13 @@ class TransactionController extends Controller
         }
         $transactions = Transaction::orderBy($sort, $direction)->paginate(15);
 
-        $transactionsEdit = Transaction::where('user_id', Auth::id())->paginate(15);
+        if (Auth::user()->isAdmin()) {
+            // Dla admina: Pobierz wszystkie transakcje z sortowaniem
+            $transactionsEdit = Transaction::orderBy($sort, $direction)->paginate(15);
+        } else {
+            // Dla zwykłego użytkownika: Pobierz tylko jego transakcje z sortowaniem
+            $transactionsEdit = Transaction::where('user_id', Auth::id())->orderBy($sort, $direction)->paginate(15);
+        }
 
 
         return view('transactions.index',[
@@ -89,6 +95,7 @@ class TransactionController extends Controller
             'date' => 'required|date',
         ]);
 
+
         // Utworzenie transakcji i przechwycenie jej
         $transaction = $request->user()->transactions()->create($validatedData);
 
@@ -108,6 +115,8 @@ class TransactionController extends Controller
             $request->user()->invoices()->create($invoice);
         }
 
+        $currentTab = $request->input('tab' , 1);
+        session(['selectedTab' => $currentTab]);
         return redirect(route('transactions.index'));
     }
 

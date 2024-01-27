@@ -37,7 +37,7 @@ class TransactionPolicy
      */
     public function update(User $user, Transaction $transaction): bool
     {
-        return $transaction->user()->is($user);
+        return $user->isAdmin() || $transaction->user_id == $user->id;
     }
 
     /**

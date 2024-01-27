@@ -5,7 +5,7 @@
             <!-- Card 1 -->
 
 
-            <a href="{{route('transactions.show', $latestTransaction)}}" class="myBgColor1 myTextColor1 rounded-lg shadow-2xl overflow-hidden flex flex-col hover:opacity-85 cursor-pointer transition duration-300 ">
+            <a href="{{ $latestTransaction ? route('transactions.show', $latestTransaction) : route('transactions.index') }}" class="myBgColor1 myTextColor1 rounded-lg shadow-2xl overflow-hidden flex flex-col hover:opacity-85 cursor-pointer transition duration-300 ">
                 <div class="p-5 flex-grow">
                     <!-- Content for card 1 -->
                     <h1 class="text-2xl font-bold mb-4">Last Transactions</h1>
@@ -33,7 +33,7 @@
             </a>
 
             <!-- Card 2 -->
-            <a href="{{ route('invoices.show', $latestInvoice) }}" class="myBgColor1 myTextColor1 rounded-lg shadow-2xl hover:opacity-85 cursor-pointer transition duration-300 overflow-hidden flex flex-col">
+            <a href="{{ $latestInvoice ? route('invoices.show', $latestInvoice) : route('invoices.index') }}" class="myBgColor1 myTextColor1 rounded-lg shadow-2xl hover:opacity-85 cursor-pointer transition duration-300 overflow-hidden flex flex-col">
                 <div class="p-5 flex-grow">
                     <h2 class="text-2xl font-bold mb-4">Last Invoices</h2>
                     <div class=" myBgColor2 myTextColor1 rounded-lg overflow-hidden h-full">

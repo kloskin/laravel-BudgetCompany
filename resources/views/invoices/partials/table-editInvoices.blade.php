@@ -75,6 +75,6 @@
         </tbody>
     </table>
     <div class="p-5 bg-white">
-        {{$invoicesEdit->links()}}
+        {{ $invoicesEdit->appends(['tab' => session('selectedTab', 3)])->links() }}
     </div>
 </div>

@@ -1,16 +1,16 @@
 <x-budget_company.layout>
 
-    <div class="w-full bg-white border border-gray-500 rounded-lg shadow mt-10" x-data="{ tab: {{ session('errors') ? session('errors')->any() ? 2 : 1 : 1 }} }">
+    <div class="w-full bg-white border border-gray-500 rounded-lg shadow mt-10" x-data="{ tab: {{ session('errors') && session('errors')->any() ? 2 : session('selectedTab', 1) }} }">
 
     <ul class="myTextColor1  text-xs sm:text-lg font-medium text-center divide-x flex rounded-lg  rtl:divide-x-reverse"  role="tablist">
             <li class="w-full">
-                <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-ss-lg  hover:opacity-85 focus:outline-none myBgColor1" @click="tab = 1">Transactions List</button>
+                <button id="stats-tab" data-tabs-target="#stats" type="button" role="tab" aria-controls="stats" aria-selected="true" class="inline-block w-full p-4 rounded-ss-lg  hover:opacity-85 focus:outline-none myBgColor1"  @click="tab = 1; setTab(1)">Transactions List</button>
             </li>
             <li class="w-full">
-                <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4  hover:opacity-85 focus:outline-none myBgColor1" @click="tab = 2">Add Transaction</button>
+                <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="false" class="inline-block w-full p-4  hover:opacity-85 focus:outline-none myBgColor1"  @click="tab = 2; setTab(2)">Add Transaction</button>
             </li>
             <li class="w-full">
-                <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="false" class="inline-block w-full p-4 rounded-se-lg  hover:opacity-85 focus:outline-none myBgColor1" @click="tab = 3">Edit Transaction</button>
+                <button id="faq-tab" data-tabs-target="#faq" type="button" role="tab" aria-controls="faq" aria-selected="false" class="inline-block w-full p-4 rounded-se-lg  hover:opacity-85 focus:outline-none myBgColor1" @click="tab = 3; setTab(3)">Edit Transaction</button>
             </li>
         </ul>
 
@@ -31,5 +31,17 @@
         </div>
     </div>
 
-
 </x-budget_company.layout>
+
+<script>
+    function setTab(tabNumber) {
+        fetch('/set-tab', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // ważne dla zabezpieczeń
+            },
+            body: JSON.stringify({ tab: tabNumber })
+        });
+    }
+</script>
